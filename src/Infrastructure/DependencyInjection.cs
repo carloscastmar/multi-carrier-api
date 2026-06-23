@@ -1,4 +1,7 @@
 ﻿using multi_carrier_api.Application.Common.Interfaces;
+using multi_carrier_api.Infrastructure.Carriers;
+using multi_carrier_api.Infrastructure.Carriers.FedEx;
+using multi_carrier_api.Infrastructure.Carriers.Ups;
 using multi_carrier_api.Infrastructure.Data;
 using multi_carrier_api.Infrastructure.Data.Interceptors;
 using multi_carrier_api.Infrastructure.Identity;
@@ -33,6 +36,9 @@ public static class DependencyInjection
 
         builder.Services.AddScoped<ApplicationDbContextInitialiser>();
 
+        builder.Services.Configure<CarriersOptions>(builder.Configuration.GetSection(CarriersOptions.SectionName));
+        AddCarrierAdapters(builder);
+
         builder.Services.AddAuthentication()
             .AddBearerToken(IdentityConstants.BearerScheme);
 
@@ -46,5 +52,32 @@ public static class DependencyInjection
 
         builder.Services.AddSingleton(TimeProvider.System);
         builder.Services.AddTransient<IIdentityService, IdentityService>();
+    }
+
+    private static void AddCarrierAdapters(IHostApplicationBuilder builder)
+    {
+        var carriersOptions = builder.Configuration
+            .GetSection(CarriersOptions.SectionName)
+            .Get<CarriersOptions>() ?? new CarriersOptions();
+
+        if (carriersOptions.Ups.UseMock)
+        {
+            builder.Services.AddScoped<ICarrierShipmentAdapter, MockUpsAdapter>();
+        }
+        else
+        {
+            builder.Services.AddScoped<ICarrierShipmentAdapter, UpsShipmentAdapter>();
+        }
+
+        if (carriersOptions.FedEx.UseMock)
+        {
+            builder.Services.AddScoped<ICarrierShipmentAdapter, MockFedExAdapter>();
+        }
+        else
+        {
+            builder.Services.AddScoped<ICarrierShipmentAdapter, FedExShipmentAdapter>();
+        }
+
+        builder.Services.AddScoped<ICarrierAdapterFactory, CarrierAdapterFactory>();
     }
 }
