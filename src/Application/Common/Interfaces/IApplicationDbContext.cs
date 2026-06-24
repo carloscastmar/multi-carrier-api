@@ -4,9 +4,7 @@ namespace multi_carrier_api.Application.Common.Interfaces;
 
 public interface IApplicationDbContext
 {
-    DbSet<TodoList> TodoLists { get; }
-
-    DbSet<TodoItem> TodoItems { get; }
+    DbSet<Shipment> Shipments { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }
