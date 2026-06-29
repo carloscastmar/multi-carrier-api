@@ -12,7 +12,7 @@ public class WebApiFactory(string connectionString) : WebApplicationFactory<Prog
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder
-            .UseSetting("ConnectionStrings:multi_carrier_apiDb", connectionString);
+            .UseSetting("ConnectionStrings:multi-carrier-apiDb", connectionString);
 
         builder.ConfigureTestServices(services =>
         {
