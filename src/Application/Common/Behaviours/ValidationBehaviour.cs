@@ -1,6 +1,6 @@
-﻿using ValidationException = multi_carrier_api.Application.Common.Exceptions.ValidationException;
+﻿using ValidationException = MultiCarrierApi.Application.Common.Exceptions.ValidationException;
 
-namespace multi_carrier_api.Application.Common.Behaviours;
+namespace MultiCarrierApi.Application.Common.Behaviours;
 
 public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : notnull

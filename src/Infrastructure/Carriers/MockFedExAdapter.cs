@@ -1,8 +1,8 @@
-using multi_carrier_api.Application.Common.Interfaces;
-using multi_carrier_api.Application.Shipments.Models;
-using multi_carrier_api.Domain.Enums;
+using MultiCarrierApi.Application.Common.Interfaces;
+using MultiCarrierApi.Application.Shipments.Models;
+using MultiCarrierApi.Domain.Enums;
 
-namespace multi_carrier_api.Infrastructure.Carriers;
+namespace MultiCarrierApi.Infrastructure.Carriers;
 
 public class MockFedExAdapter : ICarrierShipmentAdapter
 {

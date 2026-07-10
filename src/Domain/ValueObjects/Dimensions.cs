@@ -1,6 +1,6 @@
-using multi_carrier_api.Domain.Enums;
+using MultiCarrierApi.Domain.Enums;
 
-namespace multi_carrier_api.Domain.ValueObjects;
+namespace MultiCarrierApi.Domain.ValueObjects;
 
 public class Dimensions : ValueObject
 {

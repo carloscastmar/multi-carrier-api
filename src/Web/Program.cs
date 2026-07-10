@@ -1,4 +1,4 @@
-using multi_carrier_api.Infrastructure.Data;
+using MultiCarrierApi.Infrastructure.Data;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);

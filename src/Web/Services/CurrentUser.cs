@@ -1,8 +1,8 @@
 ﻿using System.Security.Claims;
 
-using multi_carrier_api.Application.Common.Interfaces;
+using MultiCarrierApi.Application.Common.Interfaces;
 
-namespace multi_carrier_api.Web.Services;
+namespace MultiCarrierApi.Web.Services;
 
 public class CurrentUser : IUser
 {

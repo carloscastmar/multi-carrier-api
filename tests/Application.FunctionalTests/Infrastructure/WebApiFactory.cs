@@ -1,11 +1,11 @@
-using multi_carrier_api.Application.Common.Interfaces;
+using MultiCarrierApi.Application.Common.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace multi_carrier_api.Application.FunctionalTests.Infrastructure;
+namespace MultiCarrierApi.Application.FunctionalTests.Infrastructure;
 
 public class WebApiFactory(string connectionString) : WebApplicationFactory<Program>
 {

@@ -1,8 +1,8 @@
-using multi_carrier_api.Domain.Enums;
-using multi_carrier_api.Domain.Events;
-using multi_carrier_api.Domain.ValueObjects;
+using MultiCarrierApi.Domain.Enums;
+using MultiCarrierApi.Domain.Events;
+using MultiCarrierApi.Domain.ValueObjects;
 
-namespace multi_carrier_api.Domain.Entities;
+namespace MultiCarrierApi.Domain.Entities;
 
 public class Shipment : BaseAuditableEntity
 {

@@ -1,8 +1,8 @@
-using multi_carrier_api.Domain.Enums;
-using multi_carrier_api.Domain.ValueObjects;
-using multi_carrier_api.Domain.Entities;
+using MultiCarrierApi.Domain.Enums;
+using MultiCarrierApi.Domain.ValueObjects;
+using MultiCarrierApi.Domain.Entities;
 
-namespace multi_carrier_api.Domain.UnitTests.ValueObjects;
+namespace MultiCarrierApi.Domain.UnitTests.ValueObjects;
 
 public class AddressTests
 {

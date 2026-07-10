@@ -1,10 +1,10 @@
-using multi_carrier_api.Application.Common.Interfaces;
-using multi_carrier_api.Application.Common.Models;
+using MultiCarrierApi.Application.Common.Interfaces;
+using MultiCarrierApi.Application.Common.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace multi_carrier_api.Infrastructure.Identity;
+namespace MultiCarrierApi.Infrastructure.Identity;
 
 public class IdentityService : IIdentityService
 {

@@ -1,4 +1,4 @@
-﻿namespace multi_carrier_api.Application.Common.Interfaces;
+﻿namespace MultiCarrierApi.Application.Common.Interfaces;
 
 public interface IUser
 {

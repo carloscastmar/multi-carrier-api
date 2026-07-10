@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
-using multi_carrier_api.Application.Common.Interfaces;
+using MultiCarrierApi.Application.Common.Interfaces;
 using Microsoft.Extensions.Logging;
 
-namespace multi_carrier_api.Application.Common.Behaviours;
+namespace MultiCarrierApi.Application.Common.Behaviours;
 
 public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : notnull
@@ -45,7 +45,7 @@ public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequ
                 userName = await _identityService.GetUserNameAsync(userId);
             }
 
-            _logger.LogWarning("multi_carrier_api Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) {@UserId} {@UserName} {@Request}",
+            _logger.LogWarning("MultiCarrierApi Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) {@UserId} {@UserName} {@Request}",
                 requestName, elapsedMilliseconds, userId, userName, request);
         }
 

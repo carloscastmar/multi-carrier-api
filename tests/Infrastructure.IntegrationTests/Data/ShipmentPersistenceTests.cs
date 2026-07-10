@@ -1,10 +1,10 @@
-using multi_carrier_api.Domain.Entities;
-using multi_carrier_api.Domain.Enums;
-using multi_carrier_api.Domain.ValueObjects;
-using multi_carrier_api.Infrastructure.Data;
+using MultiCarrierApi.Domain.Entities;
+using MultiCarrierApi.Domain.Enums;
+using MultiCarrierApi.Domain.ValueObjects;
+using MultiCarrierApi.Infrastructure.Data;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace multi_carrier_api.Infrastructure.IntegrationTests.Data;
+namespace MultiCarrierApi.Infrastructure.IntegrationTests.Data;
 
 public class ShipmentPersistenceTests
 {

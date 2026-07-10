@@ -1,4 +1,4 @@
-﻿namespace multi_carrier_api.Application.Common.Exceptions;
+﻿namespace MultiCarrierApi.Application.Common.Exceptions;
 
 public class ForbiddenAccessException : Exception
 {

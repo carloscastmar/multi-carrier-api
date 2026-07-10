@@ -1,7 +1,7 @@
-using multi_carrier_api.Domain.Entities;
-using multi_carrier_api.Domain.Enums;
+using MultiCarrierApi.Domain.Entities;
+using MultiCarrierApi.Domain.Enums;
 
-namespace multi_carrier_api.Application.Shipments.Queries.GetShipmentById;
+namespace MultiCarrierApi.Application.Shipments.Queries.GetShipmentById;
 
 public class ShipmentDto
 {

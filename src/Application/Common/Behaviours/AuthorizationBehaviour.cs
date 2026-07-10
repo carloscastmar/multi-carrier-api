@@ -1,9 +1,9 @@
 ﻿using System.Reflection;
-using multi_carrier_api.Application.Common.Exceptions;
-using multi_carrier_api.Application.Common.Interfaces;
-using multi_carrier_api.Application.Common.Security;
+using MultiCarrierApi.Application.Common.Exceptions;
+using MultiCarrierApi.Application.Common.Interfaces;
+using MultiCarrierApi.Application.Common.Security;
 
-namespace multi_carrier_api.Application.Common.Behaviours;
+namespace MultiCarrierApi.Application.Common.Behaviours;
 
 public class AuthorizationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> 
     where TRequest : notnull

@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <IsAspireSharedProject>true</IsAspireSharedProject>
-    <RootNamespace>multi_carrier_api.ServiceDefaults</RootNamespace>
-    <AssemblyName>multi_carrier_api.ServiceDefaults</AssemblyName>
+    <RootNamespace>MultiCarrierApi.ServiceDefaults</RootNamespace>
+    <AssemblyName>MultiCarrierApi.ServiceDefaults</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

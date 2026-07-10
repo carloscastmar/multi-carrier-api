@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace multi_carrier_api.Web.Infrastructure;
+namespace MultiCarrierApi.Web.Infrastructure;
 
 /// <summary>
 /// Extends <see cref="IEndpointRouteBuilder"/> with convenience overloads used inside

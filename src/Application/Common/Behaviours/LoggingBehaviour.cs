@@ -1,8 +1,8 @@
-﻿using multi_carrier_api.Application.Common.Interfaces;
+﻿using MultiCarrierApi.Application.Common.Interfaces;
 using MediatR.Pipeline;
 using Microsoft.Extensions.Logging;
 
-namespace multi_carrier_api.Application.Common.Behaviours;
+namespace MultiCarrierApi.Application.Common.Behaviours;
 
 public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest>
     where TRequest : notnull
@@ -29,7 +29,7 @@ public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest>
             userName = await _identityService.GetUserNameAsync(userId);
         }
 
-        _logger.LogInformation("multi_carrier_api Request: {Name} {@UserId} {@UserName} {@Request}",
+        _logger.LogInformation("MultiCarrierApi Request: {Name} {@UserId} {@UserName} {@Request}",
             requestName, userId, userName, request);
     }
 }

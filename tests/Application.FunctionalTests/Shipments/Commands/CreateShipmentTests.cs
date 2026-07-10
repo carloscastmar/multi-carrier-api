@@ -1,10 +1,10 @@
-using multi_carrier_api.Application.Common.Exceptions;
-using multi_carrier_api.Application.Shipments.Commands.CreateShipment;
-using multi_carrier_api.Application.Shipments.Models;
-using multi_carrier_api.Domain.Entities;
-using multi_carrier_api.Domain.Enums;
+using MultiCarrierApi.Application.Common.Exceptions;
+using MultiCarrierApi.Application.Shipments.Commands.CreateShipment;
+using MultiCarrierApi.Application.Shipments.Models;
+using MultiCarrierApi.Domain.Entities;
+using MultiCarrierApi.Domain.Enums;
 
-namespace multi_carrier_api.Application.FunctionalTests.Shipments.Commands;
+namespace MultiCarrierApi.Application.FunctionalTests.Shipments.Commands;
 
 public class CreateShipmentTests : TestBase
 {

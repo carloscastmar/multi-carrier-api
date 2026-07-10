@@ -1,9 +1,9 @@
-﻿using multi_carrier_api.Application.Common.Exceptions;
+﻿using MultiCarrierApi.Application.Common.Exceptions;
 using FluentValidation.Results;
 using NUnit.Framework;
 using Shouldly;
 
-namespace multi_carrier_api.Application.UnitTests.Common.Exceptions;
+namespace MultiCarrierApi.Application.UnitTests.Common.Exceptions;
 
 public class ValidationExceptionTests
 {

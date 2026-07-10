@@ -1,4 +1,4 @@
-using multi_carrier_api.Shared;
+using MultiCarrierApi.Shared;
 
 var builder = DistributedApplication.CreateBuilder(args);
 

@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <RootNamespace>multi_carrier_api.AppHost</RootNamespace>
-    <AssemblyName>multi_carrier_api.AppHost</AssemblyName>
+    <RootNamespace>MultiCarrierApi.AppHost</RootNamespace>
+    <AssemblyName>MultiCarrierApi.AppHost</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

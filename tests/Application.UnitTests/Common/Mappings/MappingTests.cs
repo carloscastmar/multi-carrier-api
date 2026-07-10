@@ -1,12 +1,12 @@
 using System.Runtime.CompilerServices;
 using AutoMapper;
-using multi_carrier_api.Application.Common.Interfaces;
-using multi_carrier_api.Application.Shipments.Queries.GetShipmentById;
-using multi_carrier_api.Domain.Entities;
+using MultiCarrierApi.Application.Common.Interfaces;
+using MultiCarrierApi.Application.Shipments.Queries.GetShipmentById;
+using MultiCarrierApi.Domain.Entities;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
-namespace multi_carrier_api.Application.UnitTests.Common.Mappings;
+namespace MultiCarrierApi.Application.UnitTests.Common.Mappings;
 
 public class MappingTests
 {

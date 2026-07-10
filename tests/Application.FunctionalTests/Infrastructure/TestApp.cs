@@ -1,12 +1,12 @@
-using multi_carrier_api.Domain.Constants;
-using multi_carrier_api.Infrastructure.Data;
-using multi_carrier_api.Infrastructure.Identity;
+using MultiCarrierApi.Domain.Constants;
+using MultiCarrierApi.Infrastructure.Data;
+using MultiCarrierApi.Infrastructure.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace multi_carrier_api.Application.FunctionalTests.Infrastructure;
+namespace MultiCarrierApi.Application.FunctionalTests.Infrastructure;
 
 public static class TestApp
 {

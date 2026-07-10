@@ -1,5 +1,5 @@
 {
-    "name": "multi_carrier_api",
+    "name": "multi-carrier-api",
     "image": "mcr.microsoft.com/devcontainers/python:3.13-bullseye",
     "features": {
         // See https://containers.dev/features for list of features

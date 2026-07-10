@@ -1,7 +1,7 @@
 using Azure.Identity;
-using multi_carrier_api.Application.Common.Interfaces;
-using multi_carrier_api.Infrastructure.Data;
-using multi_carrier_api.Web.Services;
+using MultiCarrierApi.Application.Common.Interfaces;
+using MultiCarrierApi.Infrastructure.Data;
+using MultiCarrierApi.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Microsoft.Extensions.DependencyInjection;

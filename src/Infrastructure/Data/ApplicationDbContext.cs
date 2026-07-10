@@ -1,11 +1,11 @@
 ﻿using System.Reflection;
-using multi_carrier_api.Application.Common.Interfaces;
-using multi_carrier_api.Domain.Entities;
-using multi_carrier_api.Infrastructure.Identity;
+using MultiCarrierApi.Application.Common.Interfaces;
+using MultiCarrierApi.Domain.Entities;
+using MultiCarrierApi.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace multi_carrier_api.Infrastructure.Data;
+namespace MultiCarrierApi.Infrastructure.Data;
 
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplicationDbContext
 {

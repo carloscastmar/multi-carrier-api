@@ -1,9 +1,9 @@
-﻿using multi_carrier_api.Domain.Common;
+﻿using MultiCarrierApi.Domain.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace multi_carrier_api.Infrastructure.Data.Interceptors;
+namespace MultiCarrierApi.Infrastructure.Data.Interceptors;
 
 public class DispatchDomainEventsInterceptor : SaveChangesInterceptor
 {

@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>multi_carrier_api.Shared</RootNamespace>
-    <AssemblyName>multi_carrier_api.Shared</AssemblyName>
+    <RootNamespace>MultiCarrierApi.Shared</RootNamespace>
+    <AssemblyName>MultiCarrierApi.Shared</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup>

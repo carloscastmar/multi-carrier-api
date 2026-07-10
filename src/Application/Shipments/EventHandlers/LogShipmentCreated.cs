@@ -1,7 +1,7 @@
-using multi_carrier_api.Domain.Events;
+using MultiCarrierApi.Domain.Events;
 using Microsoft.Extensions.Logging;
 
-namespace multi_carrier_api.Application.Shipments.EventHandlers;
+namespace MultiCarrierApi.Application.Shipments.EventHandlers;
 
 public class LogShipmentCreated : INotificationHandler<ShipmentCreatedEvent>
 {

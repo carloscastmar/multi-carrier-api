@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <RootNamespace>multi_carrier_api.Application.FunctionalTests</RootNamespace>
-        <AssemblyName>multi_carrier_api.Application.FunctionalTests</AssemblyName>
+        <RootNamespace>MultiCarrierApi.Application.FunctionalTests</RootNamespace>
+        <AssemblyName>MultiCarrierApi.Application.FunctionalTests</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>

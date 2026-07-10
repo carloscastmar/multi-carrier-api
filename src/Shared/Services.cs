@@ -1,4 +1,4 @@
-﻿namespace multi_carrier_api.Shared;
+﻿namespace MultiCarrierApi.Shared;
 
 public static class Services
 {

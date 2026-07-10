@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <RootNamespace>multi_carrier_api.Domain.UnitTests</RootNamespace>
-        <AssemblyName>multi_carrier_api.Domain.UnitTests</AssemblyName>
+        <RootNamespace>MultiCarrierApi.Domain.UnitTests</RootNamespace>
+        <AssemblyName>MultiCarrierApi.Domain.UnitTests</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>

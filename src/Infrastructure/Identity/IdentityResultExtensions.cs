@@ -1,7 +1,7 @@
-﻿using multi_carrier_api.Application.Common.Models;
+﻿using MultiCarrierApi.Application.Common.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace multi_carrier_api.Infrastructure.Identity;
+namespace MultiCarrierApi.Infrastructure.Identity;
 
 public static class IdentityResultExtensions
 {

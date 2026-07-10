@@ -1,6 +1,6 @@
-﻿using multi_carrier_api.Application.Common.Models;
+﻿using MultiCarrierApi.Application.Common.Models;
 
-namespace multi_carrier_api.Application.Common.Interfaces;
+namespace MultiCarrierApi.Application.Common.Interfaces;
 
 public interface IIdentityService
 {

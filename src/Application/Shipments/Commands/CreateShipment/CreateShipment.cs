@@ -1,10 +1,10 @@
-using multi_carrier_api.Application.Common.Interfaces;
-using multi_carrier_api.Application.Shipments.Models;
-using multi_carrier_api.Domain.Entities;
-using multi_carrier_api.Domain.Enums;
-using multi_carrier_api.Domain.ValueObjects;
+using MultiCarrierApi.Application.Common.Interfaces;
+using MultiCarrierApi.Application.Shipments.Models;
+using MultiCarrierApi.Domain.Entities;
+using MultiCarrierApi.Domain.Enums;
+using MultiCarrierApi.Domain.ValueObjects;
 
-namespace multi_carrier_api.Application.Shipments.Commands.CreateShipment;
+namespace MultiCarrierApi.Application.Shipments.Commands.CreateShipment;
 
 public record CreateShipmentCommand : IRequest<CreateShipmentResult>
 {

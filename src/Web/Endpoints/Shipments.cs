@@ -1,9 +1,9 @@
-using multi_carrier_api.Application.Shipments.Commands.CreateShipment;
-using multi_carrier_api.Application.Shipments.Models;
-using multi_carrier_api.Application.Shipments.Queries.GetShipmentById;
+using MultiCarrierApi.Application.Shipments.Commands.CreateShipment;
+using MultiCarrierApi.Application.Shipments.Models;
+using MultiCarrierApi.Application.Shipments.Queries.GetShipmentById;
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace multi_carrier_api.Web.Endpoints;
+namespace MultiCarrierApi.Web.Endpoints;
 
 public class Shipments : IEndpointGroup
 {

@@ -1,8 +1,8 @@
-using multi_carrier_api.Domain.Entities;
+using MultiCarrierApi.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace multi_carrier_api.Infrastructure.Data.Configurations;
+namespace MultiCarrierApi.Infrastructure.Data.Configurations;
 
 public class ShipmentConfiguration : IEntityTypeConfiguration<Shipment>
 {

@@ -1,10 +1,10 @@
-﻿using multi_carrier_api.Application.Common.Interfaces;
-using multi_carrier_api.Domain.Common;
+﻿using MultiCarrierApi.Application.Common.Interfaces;
+using MultiCarrierApi.Domain.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace multi_carrier_api.Infrastructure.Data.Interceptors;
+namespace MultiCarrierApi.Infrastructure.Data.Interceptors;
 
 public class AuditableEntityInterceptor : SaveChangesInterceptor
 {

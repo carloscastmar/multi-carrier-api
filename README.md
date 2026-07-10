@@ -1,4 +1,4 @@
-﻿# multi_carrier_api
+﻿# multi-carrier-api
 
 The project was generated using the [Clean.Architecture.Solution.Template](https://github.com/jasontaylordev/CleanArchitecture) version 10.8.0.
 

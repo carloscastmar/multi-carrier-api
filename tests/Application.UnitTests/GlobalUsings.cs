@@ -1,3 +1,3 @@
-global using multi_carrier_api.Application.Common.Interfaces;
+global using MultiCarrierApi.Application.Common.Interfaces;
 global using NUnit.Framework;
 global using Shouldly;

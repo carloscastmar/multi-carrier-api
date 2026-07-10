@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace multi_carrier_api.Web.Infrastructure;
+namespace MultiCarrierApi.Web.Infrastructure;
 
 public static class WebApplicationExtensions
 {

@@ -1,7 +1,7 @@
-using multi_carrier_api.Application.Shipments.Models;
-using multi_carrier_api.Domain.Enums;
+using MultiCarrierApi.Application.Shipments.Models;
+using MultiCarrierApi.Domain.Enums;
 
-namespace multi_carrier_api.Application.Common.Interfaces;
+namespace MultiCarrierApi.Application.Common.Interfaces;
 
 public interface ICarrierShipmentAdapter
 {

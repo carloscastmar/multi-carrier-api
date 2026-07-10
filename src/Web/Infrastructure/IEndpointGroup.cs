@@ -1,4 +1,4 @@
-namespace multi_carrier_api.Web.Infrastructure;
+namespace MultiCarrierApi.Web.Infrastructure;
 
 /// <summary>
 /// Defines a group of related Minimal API endpoints.

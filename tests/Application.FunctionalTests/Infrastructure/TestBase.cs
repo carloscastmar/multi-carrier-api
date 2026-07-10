@@ -1,4 +1,4 @@
-namespace multi_carrier_api.Application.FunctionalTests.Infrastructure;
+namespace MultiCarrierApi.Application.FunctionalTests.Infrastructure;
 
 public abstract class TestBase
 {

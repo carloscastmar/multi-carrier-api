@@ -1,6 +1,6 @@
-using multi_carrier_api.Domain.Enums;
+using MultiCarrierApi.Domain.Enums;
 
-namespace multi_carrier_api.Application.Shipments.Models;
+namespace MultiCarrierApi.Application.Shipments.Models;
 
 public record AddressDto
 {

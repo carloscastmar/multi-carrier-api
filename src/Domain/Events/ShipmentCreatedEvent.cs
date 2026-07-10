@@ -1,6 +1,6 @@
-using multi_carrier_api.Domain.Entities;
+using MultiCarrierApi.Domain.Entities;
 
-namespace multi_carrier_api.Domain.Events;
+namespace MultiCarrierApi.Domain.Events;
 
 public class ShipmentCreatedEvent : BaseEvent
 {

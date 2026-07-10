@@ -1,10 +1,10 @@
-﻿using multi_carrier_api.Application.Common.Interfaces;
-using multi_carrier_api.Infrastructure.Carriers;
-using multi_carrier_api.Infrastructure.Carriers.FedEx;
-using multi_carrier_api.Infrastructure.Carriers.Ups;
-using multi_carrier_api.Infrastructure.Data;
-using multi_carrier_api.Infrastructure.Data.Interceptors;
-using multi_carrier_api.Infrastructure.Identity;
+﻿using MultiCarrierApi.Application.Common.Interfaces;
+using MultiCarrierApi.Infrastructure.Carriers;
+using MultiCarrierApi.Infrastructure.Carriers.FedEx;
+using MultiCarrierApi.Infrastructure.Carriers.Ups;
+using MultiCarrierApi.Infrastructure.Data;
+using MultiCarrierApi.Infrastructure.Data.Interceptors;
+using MultiCarrierApi.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;

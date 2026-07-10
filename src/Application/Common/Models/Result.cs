@@ -1,4 +1,4 @@
-﻿namespace multi_carrier_api.Application.Common.Models;
+﻿namespace MultiCarrierApi.Application.Common.Models;
 
 public class Result
 {

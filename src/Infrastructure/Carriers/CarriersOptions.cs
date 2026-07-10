@@ -1,4 +1,4 @@
-namespace multi_carrier_api.Infrastructure.Carriers;
+namespace MultiCarrierApi.Infrastructure.Carriers;
 
 public class CarriersOptions
 {

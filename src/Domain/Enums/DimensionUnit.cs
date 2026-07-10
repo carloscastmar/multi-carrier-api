@@ -1,4 +1,4 @@
-namespace multi_carrier_api.Domain.Enums;
+namespace MultiCarrierApi.Domain.Enums;
 
 public enum DimensionUnit
 {

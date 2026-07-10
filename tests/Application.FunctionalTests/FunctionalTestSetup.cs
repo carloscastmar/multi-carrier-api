@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace multi_carrier_api.Application.FunctionalTests;
+namespace MultiCarrierApi.Application.FunctionalTests;
 
 [SetUpFixture]
 public class FunctionalTestSetup

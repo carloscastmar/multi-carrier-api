@@ -1,9 +1,9 @@
-using multi_carrier_api.Application.Shipments.Commands.CreateShipment;
-using multi_carrier_api.Application.Shipments.Models;
-using multi_carrier_api.Domain.Enums;
-using multi_carrier_api.Infrastructure.Carriers;
+using MultiCarrierApi.Application.Shipments.Commands.CreateShipment;
+using MultiCarrierApi.Application.Shipments.Models;
+using MultiCarrierApi.Domain.Enums;
+using MultiCarrierApi.Infrastructure.Carriers;
 
-namespace multi_carrier_api.Application.UnitTests.Carriers;
+namespace MultiCarrierApi.Application.UnitTests.Carriers;
 
 public class CarrierAdapterFactoryTests
 {

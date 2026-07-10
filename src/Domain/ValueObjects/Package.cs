@@ -1,4 +1,4 @@
-namespace multi_carrier_api.Domain.ValueObjects;
+namespace MultiCarrierApi.Domain.ValueObjects;
 
 public class Package : ValueObject
 {

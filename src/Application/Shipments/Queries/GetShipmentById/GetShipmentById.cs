@@ -1,7 +1,7 @@
-using multi_carrier_api.Application.Common.Interfaces;
-using multi_carrier_api.Domain.Entities;
+using MultiCarrierApi.Application.Common.Interfaces;
+using MultiCarrierApi.Domain.Entities;
 
-namespace multi_carrier_api.Application.Shipments.Queries.GetShipmentById;
+namespace MultiCarrierApi.Application.Shipments.Queries.GetShipmentById;
 
 public record GetShipmentByIdQuery(int Id) : IRequest<ShipmentDto?>;
 

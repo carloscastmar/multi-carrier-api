@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using multi_carrier_api.Application.Common.Behaviours;
+using MultiCarrierApi.Application.Common.Behaviours;
 using Microsoft.Extensions.Hosting;
 
 namespace Microsoft.Extensions.DependencyInjection;

@@ -1,13 +1,13 @@
-﻿using multi_carrier_api.Application.Common.Behaviours;
-using multi_carrier_api.Application.Common.Interfaces;
-using multi_carrier_api.Application.Shipments.Commands.CreateShipment;
-using multi_carrier_api.Application.Shipments.Models;
-using multi_carrier_api.Domain.Enums;
+﻿using MultiCarrierApi.Application.Common.Behaviours;
+using MultiCarrierApi.Application.Common.Interfaces;
+using MultiCarrierApi.Application.Shipments.Commands.CreateShipment;
+using MultiCarrierApi.Application.Shipments.Models;
+using MultiCarrierApi.Domain.Enums;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 
-namespace multi_carrier_api.Application.UnitTests.Common.Behaviours;
+namespace MultiCarrierApi.Application.UnitTests.Common.Behaviours;
 
 public class RequestLoggerTests
 {

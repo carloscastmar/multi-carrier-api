@@ -1,6 +1,6 @@
-using multi_carrier_api.Shared;
+using MultiCarrierApi.Shared;
 
-namespace multi_carrier_api.TestAppHost;
+namespace MultiCarrierApi.TestAppHost;
 
 public class Program
 {

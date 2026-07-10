@@ -5,7 +5,7 @@
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "applicationUrl": "https://multi_carrier_api.dev.localhost:17210;http://multi_carrier_api.dev.localhost:15233",
+      "applicationUrl": "https://multi-carrier-api.dev.localhost:17210;http://multi-carrier-api.dev.localhost:15233",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "DOTNET_ENVIRONMENT": "Development",
@@ -17,7 +17,7 @@
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "applicationUrl": "http://multi_carrier_api.dev.localhost:15233",
+      "applicationUrl": "http://multi-carrier-api.dev.localhost:15233",
       "environmentVariables": {
         "ASPIRE_ALLOW_UNSECURED_TRANSPORT": "true",
         "ASPNETCORE_ENVIRONMENT": "Development",

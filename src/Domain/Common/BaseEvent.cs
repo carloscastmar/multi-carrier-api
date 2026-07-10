@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace multi_carrier_api.Domain.Common;
+namespace MultiCarrierApi.Domain.Common;
 
 public abstract class BaseEvent : INotification
 {

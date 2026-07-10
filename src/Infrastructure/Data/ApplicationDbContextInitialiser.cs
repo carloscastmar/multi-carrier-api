@@ -1,11 +1,11 @@
-﻿using multi_carrier_api.Domain.Constants;
-using multi_carrier_api.Infrastructure.Identity;
+﻿using MultiCarrierApi.Domain.Constants;
+using MultiCarrierApi.Infrastructure.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace multi_carrier_api.Infrastructure.Data;
+namespace MultiCarrierApi.Infrastructure.Data;
 
 public static class InitialiserExtensions
 {

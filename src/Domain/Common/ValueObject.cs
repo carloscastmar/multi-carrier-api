@@ -1,4 +1,4 @@
-﻿namespace multi_carrier_api.Domain.Common;
+﻿namespace MultiCarrierApi.Domain.Common;
 
 // Learn more: https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/microservice-ddd-cqrs-patterns/implement-value-objects
 public abstract class ValueObject

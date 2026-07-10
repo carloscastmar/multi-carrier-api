@@ -1,8 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
-using multi_carrier_api.Application.FunctionalTests.Infrastructure;
-using multi_carrier_api.Shared;
+using MultiCarrierApi.Application.FunctionalTests.Infrastructure;
+using MultiCarrierApi.Shared;
 
-namespace multi_carrier_api.Infrastructure.IntegrationTests;
+namespace MultiCarrierApi.Infrastructure.IntegrationTests;
 
 [SetUpFixture]
 public class IntegrationTestSetup

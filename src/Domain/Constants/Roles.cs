@@ -1,4 +1,4 @@
-﻿namespace multi_carrier_api.Domain.Constants;
+﻿namespace MultiCarrierApi.Domain.Constants;
 
 public abstract class Roles
 {

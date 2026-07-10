@@ -1,9 +1,9 @@
-﻿using multi_carrier_api.Infrastructure.Identity;
+﻿using MultiCarrierApi.Infrastructure.Identity;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace multi_carrier_api.Web.Endpoints;
+namespace MultiCarrierApi.Web.Endpoints;
 
 public class Users : IEndpointGroup
 {
