@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/artifacts/bin/Web/debug/multi_carrier_api.Web.dll",
+            "program": "${workspaceFolder}/artifacts/bin/Web/debug/MultiCarrierApi.Web.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src/Web",
             "stopAtEntry": false,
