@@ -13,6 +13,8 @@ builder.AddWebServices();
 
 var app = builder.Build();
 
+app.UseExceptionHandler();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -34,8 +36,6 @@ app.UseFileServer();
 
 app.MapOpenApi();
 app.MapScalarApiReference();
-
-app.UseExceptionHandler(options => { });
 
 app.Map("/", () => Results.Redirect("/scalar"));
 
