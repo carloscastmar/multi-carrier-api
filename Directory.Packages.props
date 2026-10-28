@@ -49,10 +49,11 @@
     <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="1.15.0" />
     <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="1.15.0" />
     <!-- Fix MessagePack CVE-2026-48109 (via Aspire/StreamJsonRpc) -->
-    <PackageVersion Include="MessagePack" Version="2.5.302" />
+    <PackageVersion Include="MessagePack" Version="2.5.307" />
     <!-- Fix OpenTelemetry CVEs -->
     <PackageVersion Include="OpenTelemetry.Api" Version="1.15.3" />
-    <!-- Fix System.Security.Cryptography.Xml CVEs -->
-    <PackageVersion Include="System.Security.Cryptography.Xml" Version="10.0.6" />
+    <!-- Fix System.Security.Cryptography.Xml / Pkcs CVEs -->
+    <PackageVersion Include="System.Security.Cryptography.Pkcs" Version="10.0.14" />
+    <PackageVersion Include="System.Security.Cryptography.Xml" Version="10.0.14" />
   </ItemGroup>
 </Project>
