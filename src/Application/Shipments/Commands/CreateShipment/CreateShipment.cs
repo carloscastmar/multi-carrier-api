@@ -1,8 +1,10 @@
 using MultiCarrierApi.Application.Common.Interfaces;
 using MultiCarrierApi.Application.Shipments.Models;
+using MultiCarrierApi.Domain.Constants;
 using MultiCarrierApi.Domain.Entities;
 using MultiCarrierApi.Domain.Enums;
 using MultiCarrierApi.Domain.ValueObjects;
+using Microsoft.Extensions.Logging;
 
 namespace MultiCarrierApi.Application.Shipments.Commands.CreateShipment;
 
@@ -23,13 +25,16 @@ public class CreateShipmentCommandHandler : IRequestHandler<CreateShipmentComman
 {
     private readonly IApplicationDbContext _context;
     private readonly ICarrierAdapterFactory _carrierAdapterFactory;
+    private readonly ILogger<CreateShipmentCommandHandler> _logger;
 
     public CreateShipmentCommandHandler(
         IApplicationDbContext context,
-        ICarrierAdapterFactory carrierAdapterFactory)
+        ICarrierAdapterFactory carrierAdapterFactory,
+        ILogger<CreateShipmentCommandHandler> logger)
     {
         _context = context;
         _carrierAdapterFactory = carrierAdapterFactory;
+        _logger = logger;
     }
 
     public async Task<CreateShipmentResult> Handle(CreateShipmentCommand request, CancellationToken cancellationToken)
@@ -45,20 +50,38 @@ public class CreateShipmentCommandHandler : IRequestHandler<CreateShipmentComman
             packages,
             request.ServiceLevel);
 
+        // Resolve the adapter before persisting so an unsupported carrier never leaves a Pending row behind.
+        var adapter = _carrierAdapterFactory.GetAdapter(request.Carrier);
+
         _context.Shipments.Add(shipment);
         await _context.SaveChangesAsync(cancellationToken);
 
-        var adapter = _carrierAdapterFactory.GetAdapter(request.Carrier);
-        var carrierResponse = await adapter.CreateShipmentAsync(
-            new ShipmentRequest
-            {
-                Carrier = request.Carrier,
-                ShipFrom = request.ShipFrom,
-                ShipTo = request.ShipTo,
-                Packages = request.Packages,
-                ServiceLevel = request.ServiceLevel
-            },
-            cancellationToken);
+        CarrierShipmentResponse carrierResponse;
+
+        try
+        {
+            carrierResponse = await adapter.CreateShipmentAsync(
+                new ShipmentRequest
+                {
+                    Carrier = request.Carrier,
+                    ShipFrom = request.ShipFrom,
+                    ShipTo = request.ShipTo,
+                    Packages = request.Packages,
+                    ServiceLevel = request.ServiceLevel
+                },
+                cancellationToken);
+        }
+        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+        {
+            shipment.MarkFailed("The request was cancelled before the carrier responded.");
+            await _context.SaveChangesAsync(CancellationToken.None);
+            throw;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Carrier {Carrier} failed to create shipment {ShipmentId}", request.Carrier, shipment.Id);
+            carrierResponse = CarrierShipmentResponse.Failure($"The {request.Carrier} carrier request failed.");
+        }
 
         if (carrierResponse.Succeeded)
         {
@@ -70,7 +93,10 @@ public class CreateShipmentCommandHandler : IRequestHandler<CreateShipmentComman
         }
         else
         {
-            shipment.MarkFailed(carrierResponse.FailureReason ?? "Carrier rejected the shipment request.");
+            var failureReason = carrierResponse.FailureReason ?? "Carrier rejected the shipment request.";
+            shipment.MarkFailed(failureReason.Length > ShipmentFieldLengths.FailureReason
+                ? failureReason[..ShipmentFieldLengths.FailureReason]
+                : failureReason);
         }
 
         await _context.SaveChangesAsync(cancellationToken);
