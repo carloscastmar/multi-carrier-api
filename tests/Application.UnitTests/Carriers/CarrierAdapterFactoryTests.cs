@@ -55,6 +55,32 @@ public class CreateShipmentCommandValidatorTests
         result.IsValid.ShouldBeFalse();
     }
 
+    [Test]
+    public void ShouldRejectValuesLongerThanTheirDatabaseColumns()
+    {
+        var command = CreateValidCommand();
+        command = command with
+        {
+            ShipFrom = command.ShipFrom with { Name = new string('a', 201) },
+            ServiceLevel = new string('a', 51)
+        };
+
+        var result = _validator.Validate(command);
+
+        result.IsValid.ShouldBeFalse();
+        result.Errors.Select(e => e.PropertyName).ShouldBe(["ShipFrom.Name", "ServiceLevel"], ignoreOrder: true);
+    }
+
+    [Test]
+    public void ShouldRejectNullPackage()
+    {
+        var command = CreateValidCommand() with { Packages = [null!] };
+
+        var result = _validator.Validate(command);
+
+        result.IsValid.ShouldBeFalse();
+    }
+
     private static CreateShipmentCommand CreateValidCommand() =>
         new()
         {

@@ -52,7 +52,7 @@ public class CreateShipmentTests : TestBase
         await Should.ThrowAsync<ValidationException>(() => TestApp.SendAsync(command));
     }
 
-    private static CreateShipmentCommand CreateValidCommand(CarrierType carrier) =>
+    internal static CreateShipmentCommand CreateValidCommand(CarrierType carrier) =>
         new()
         {
             Carrier = carrier,
