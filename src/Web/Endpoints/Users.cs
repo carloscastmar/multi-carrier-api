@@ -1,7 +1,4 @@
 ﻿using MultiCarrierApi.Infrastructure.Identity;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 
 namespace MultiCarrierApi.Web.Endpoints;
 
@@ -9,21 +6,7 @@ public class Users : IEndpointGroup
 {
     public static void Map(RouteGroupBuilder groupBuilder)
     {
+        // Bearer tokens are stateless, so there is no server-side logout: clients discard their tokens.
         groupBuilder.MapIdentityApi<ApplicationUser>();
-
-        groupBuilder.MapPost(Logout, "logout").RequireAuthorization();
-    }
-
-    [EndpointSummary("Log out")]
-    [EndpointDescription("Logs out the current user by clearing the authentication cookie.")]
-    public static async Task<Results<Ok, UnauthorizedHttpResult>> Logout(SignInManager<ApplicationUser> signInManager, [FromBody] object empty)
-    {
-        if (empty != null)
-        {
-            await signInManager.SignOutAsync();
-            return TypedResults.Ok();
-        }
-
-        return TypedResults.Unauthorized();
     }
 }
