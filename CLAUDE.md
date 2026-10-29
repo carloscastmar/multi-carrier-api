@@ -1,6 +1,6 @@
 # Project: Multi-Carrier Shipping API
 
-A .NET API that creates shipments through one interface over multiple carriers (UPS, FedEx) and stores them with tracking and label data. Built from the Jason Taylor Clean Architecture template (v10.8.0) and run with .NET Aspire.
+A .NET API that creates shipments through one interface over multiple carriers (UPS, FedEx) and stores them with tracking and label data. Built with Clean Architecture and run with .NET Aspire.
 
 ## Tech Stack (WHAT)
 - **Runtime:** .NET 10 (SDK pinned in `global.json`), Minimal APIs, nullable enabled
@@ -49,10 +49,6 @@ Dependencies only flow inward:
 ### EF Core Migrations (from repo root)
 - Add: `dotnet ef migrations add <Name> --project src/Infrastructure --startup-project src/Web --output-dir Data/Migrations`
 - Never edit an existing migration that has been pushed; add a new one instead.
-
-### Scaffolding (from `src/Application`)
-- Command: `dotnet new ca-usecase -n <Name> -fn <Feature> -ut command -rt <ReturnType>`
-- Query: `dotnet new ca-usecase -n <Name> -fn <Feature> -ut query -rt <ReturnType>`
 
 ### Testing
 - All tests (as CI runs them): `dotnet test`
