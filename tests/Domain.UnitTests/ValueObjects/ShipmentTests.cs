@@ -30,6 +30,26 @@ public class AddressTests
     }
 }
 
+public class ShipmentErrorTests
+{
+    [Test]
+    public void ShouldCreateTrimmedError()
+    {
+        var error = ShipmentError.Create(" invalid_postal_code ", " Not valid. ", " ");
+
+        error.Code.ShouldBe("invalid_postal_code");
+        error.Message.ShouldBe("Not valid.");
+        error.Field.ShouldBeNull();
+    }
+
+    [Test]
+    public void ShouldRequireCodeAndMessage()
+    {
+        Should.Throw<ArgumentException>(() => ShipmentError.Create("", "Not valid."));
+        Should.Throw<ArgumentException>(() => ShipmentError.Create("invalid_postal_code", " "));
+    }
+}
+
 public class ShipmentTests
 {
     [Test]
@@ -52,6 +72,23 @@ public class ShipmentTests
         shipment.Status.ShouldBe(ShipmentStatus.Created);
         shipment.TrackingNumber.ShouldBe("1Z123");
         shipment.DomainEvents.ShouldContain(e => e is Domain.Events.ShipmentCreatedEvent);
+    }
+
+    [Test]
+    public void ShouldMarkFailedWithErrorsAndRaiseDomainEvent()
+    {
+        var shipment = CreateShipment();
+
+        shipment.MarkFailed(
+            "Carrier rejected the shipment.",
+            [ShipmentError.Create("invalid_postal_code", "The postal code is not valid.", "ShipTo.PostalCode")]);
+
+        shipment.Status.ShouldBe(ShipmentStatus.Failed);
+        shipment.FailureReason.ShouldBe("Carrier rejected the shipment.");
+        shipment.Errors.Count.ShouldBe(1);
+        shipment.Errors[0].Code.ShouldBe("invalid_postal_code");
+        shipment.Errors[0].Field.ShouldBe("ShipTo.PostalCode");
+        shipment.DomainEvents.ShouldContain(e => e is Domain.Events.ShipmentFailedEvent);
     }
 
     private static Domain.Entities.Shipment CreateShipment()

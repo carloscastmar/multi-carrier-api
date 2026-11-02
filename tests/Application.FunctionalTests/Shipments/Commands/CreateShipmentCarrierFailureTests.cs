@@ -1,8 +1,10 @@
 using MultiCarrierApi.Application.Common.Interfaces;
 using MultiCarrierApi.Application.Shipments.Commands.CreateShipment;
 using MultiCarrierApi.Application.Shipments.Models;
+using MultiCarrierApi.Application.Shipments.Queries.GetShipmentById;
 using MultiCarrierApi.Domain.Entities;
 using MultiCarrierApi.Domain.Enums;
+using MultiCarrierApi.Infrastructure.Carriers;
 using MultiCarrierApi.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,6 +34,29 @@ public class CreateShipmentCarrierFailureTests : TestBase
         shipment.ShouldNotBeNull();
         shipment!.Status.ShouldBe(ShipmentStatus.Failed);
         shipment.FailureReason.ShouldBe("The Ups carrier request failed.");
+        shipment.Errors.ShouldHaveSingleItem().Code.ShouldBe(CreateShipmentCommandHandler.CarrierRequestFailedCode);
+        result.Errors.ShouldHaveSingleItem().Code.ShouldBe(CreateShipmentCommandHandler.CarrierRequestFailedCode);
+    }
+
+    [Test]
+    public async Task ShouldStoreCarrierErrorsWhenCarrierRejectsShipment()
+    {
+        await TestApp.RunAsDefaultUserAsync();
+
+        var command = CreateShipmentTests.CreateValidCommand(CarrierType.FedEx);
+        command = command with { ShipTo = command.ShipTo with { PostalCode = MockCarrierErrors.InvalidPostalCode } };
+
+        var result = await TestApp.SendAsync(command);
+
+        result.Succeeded.ShouldBeFalse();
+        var error = result.Errors.ShouldHaveSingleItem();
+        error.Code.ShouldBe(MockCarrierErrors.InvalidPostalCodeErrorCode);
+        error.Field.ShouldBe("ShipTo.PostalCode");
+
+        var shipment = await TestApp.SendAsync(new GetShipmentByIdQuery(result.ShipmentId));
+        shipment.ShouldNotBeNull();
+        shipment!.Status.ShouldBe(ShipmentStatus.Failed);
+        shipment.Errors.ShouldHaveSingleItem().Code.ShouldBe(MockCarrierErrors.InvalidPostalCodeErrorCode);
     }
 
     [Test]

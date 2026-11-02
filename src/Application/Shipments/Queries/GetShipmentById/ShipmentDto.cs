@@ -1,5 +1,7 @@
+using MultiCarrierApi.Application.Shipments.Models;
 using MultiCarrierApi.Domain.Entities;
 using MultiCarrierApi.Domain.Enums;
+using MultiCarrierApi.Domain.ValueObjects;
 
 namespace MultiCarrierApi.Application.Shipments.Queries.GetShipmentById;
 
@@ -23,11 +25,14 @@ public class ShipmentDto
 
     public string? FailureReason { get; init; }
 
+    public IReadOnlyList<ShipmentErrorDto> Errors { get; init; } = [];
+
     private class Mapping : Profile
     {
         public Mapping()
         {
             CreateMap<Shipment, ShipmentDto>();
+            CreateMap<ShipmentError, ShipmentErrorDto>();
         }
     }
 }

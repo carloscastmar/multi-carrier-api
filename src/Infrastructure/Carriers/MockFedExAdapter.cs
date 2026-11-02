@@ -14,6 +14,11 @@ public class MockFedExAdapter : ICarrierShipmentAdapter
     {
         await Task.Delay(100, cancellationToken);
 
+        if (request.ShipTo.PostalCode == MockCarrierErrors.InvalidPostalCode)
+        {
+            return MockCarrierErrors.InvalidShipToPostalCode("FedEx");
+        }
+
         return CarrierShipmentResponse.Success(
             trackingNumber: "748901234567890",
             labelData: Convert.ToBase64String("mock-fedex-label-pdf"u8.ToArray()),
