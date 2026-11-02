@@ -14,6 +14,11 @@ public class MockUpsAdapter : ICarrierShipmentAdapter
     {
         await Task.Delay(100, cancellationToken);
 
+        if (request.ShipTo.PostalCode == MockCarrierErrors.InvalidPostalCode)
+        {
+            return MockCarrierErrors.InvalidShipToPostalCode("Ups");
+        }
+
         return CarrierShipmentResponse.Success(
             trackingNumber: "1Z999AA10123456784",
             labelData: Convert.ToBase64String("mock-ups-label-pdf"u8.ToArray()),

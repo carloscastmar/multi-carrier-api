@@ -31,6 +31,32 @@ public class CarrierAdapterFactoryTests
     }
 }
 
+public class MockCarrierAdapterTests
+{
+    [Test]
+    public async Task ShouldReturnStructuredErrorForInvalidPostalCode()
+    {
+        IReadOnlyList<ICarrierShipmentAdapter> adapters = [new MockUpsAdapter(), new MockFedExAdapter()];
+
+        foreach (var adapter in adapters)
+        {
+            var response = await adapter.CreateShipmentAsync(
+                new ShipmentRequest
+                {
+                    Carrier = adapter.Carrier,
+                    ShipFrom = new AddressDto { PostalCode = "30301" },
+                    ShipTo = new AddressDto { PostalCode = MockCarrierErrors.InvalidPostalCode }
+                },
+                CancellationToken.None);
+
+            response.Succeeded.ShouldBeFalse();
+            response.Errors.Count.ShouldBe(1);
+            response.Errors[0].Code.ShouldBe(MockCarrierErrors.InvalidPostalCodeErrorCode);
+            response.Errors[0].Field.ShouldBe("ShipTo.PostalCode");
+        }
+    }
+}
+
 public class CreateShipmentCommandValidatorTests
 {
     private readonly CreateShipmentCommandValidator _validator = new();

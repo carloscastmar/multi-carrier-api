@@ -23,6 +23,9 @@ public record CreateShipmentCommand : IRequest<CreateShipmentResult>
 
 public class CreateShipmentCommandHandler : IRequestHandler<CreateShipmentCommand, CreateShipmentResult>
 {
+    public const string CarrierRequestFailedCode = "carrier_request_failed";
+    public const string RequestCancelledCode = "request_cancelled";
+
     private readonly IApplicationDbContext _context;
     private readonly ICarrierAdapterFactory _carrierAdapterFactory;
     private readonly ILogger<CreateShipmentCommandHandler> _logger;
@@ -73,14 +76,18 @@ public class CreateShipmentCommandHandler : IRequestHandler<CreateShipmentComman
         }
         catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {
-            shipment.MarkFailed("The request was cancelled before the carrier responded.");
+            const string cancelledMessage = "The request was cancelled before the carrier responded.";
+            shipment.MarkFailed(cancelledMessage, [ShipmentError.Create(RequestCancelledCode, cancelledMessage)]);
             await _context.SaveChangesAsync(CancellationToken.None);
             throw;
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Carrier {Carrier} failed to create shipment {ShipmentId}", request.Carrier, shipment.Id);
-            carrierResponse = CarrierShipmentResponse.Failure($"The {request.Carrier} carrier request failed.");
+            var failureMessage = $"The {request.Carrier} carrier request failed.";
+            carrierResponse = CarrierShipmentResponse.Failure(
+                failureMessage,
+                [new CarrierError { Code = CarrierRequestFailedCode, Message = failureMessage }]);
         }
 
         if (carrierResponse.Succeeded)
@@ -94,9 +101,9 @@ public class CreateShipmentCommandHandler : IRequestHandler<CreateShipmentComman
         else
         {
             var failureReason = carrierResponse.FailureReason ?? "Carrier rejected the shipment request.";
-            shipment.MarkFailed(failureReason.Length > ShipmentFieldLengths.FailureReason
-                ? failureReason[..ShipmentFieldLengths.FailureReason]
-                : failureReason);
+            shipment.MarkFailed(
+                Truncate(failureReason, ShipmentFieldLengths.FailureReason),
+                carrierResponse.Errors.Select(MapError));
         }
 
         await _context.SaveChangesAsync(cancellationToken);
@@ -110,9 +117,21 @@ public class CreateShipmentCommandHandler : IRequestHandler<CreateShipmentComman
             LabelData = shipment.LabelData,
             LabelFormat = shipment.LabelFormat,
             CarrierReference = shipment.CarrierReference,
-            FailureReason = shipment.FailureReason
+            FailureReason = shipment.FailureReason,
+            Errors = shipment.Errors
+                .Select(e => new ShipmentErrorDto { Code = e.Code, Message = e.Message, Field = e.Field })
+                .ToList()
         };
     }
+
+    private static ShipmentError MapError(CarrierError error) =>
+        ShipmentError.Create(
+            Truncate(error.Code, ShipmentFieldLengths.ErrorCode),
+            Truncate(error.Message, ShipmentFieldLengths.ErrorMessage),
+            error.Field is null ? null : Truncate(error.Field, ShipmentFieldLengths.ErrorField));
+
+    private static string Truncate(string value, int maxLength) =>
+        value.Length > maxLength ? value[..maxLength] : value;
 
     private static Address MapAddress(AddressDto dto) =>
         Address.Create(

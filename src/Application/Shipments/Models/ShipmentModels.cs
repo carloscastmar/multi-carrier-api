@@ -59,6 +59,24 @@ public record ShipmentRequest
     public string? ServiceLevel { get; init; }
 }
 
+public record CarrierError
+{
+    public string Code { get; init; } = string.Empty;
+
+    public string Message { get; init; } = string.Empty;
+
+    public string? Field { get; init; }
+}
+
+public record ShipmentErrorDto
+{
+    public string Code { get; init; } = string.Empty;
+
+    public string Message { get; init; } = string.Empty;
+
+    public string? Field { get; init; }
+}
+
 public record CarrierShipmentResponse
 {
     public bool Succeeded { get; init; }
@@ -72,6 +90,8 @@ public record CarrierShipmentResponse
     public string? CarrierReference { get; init; }
 
     public string? FailureReason { get; init; }
+
+    public IReadOnlyList<CarrierError> Errors { get; init; } = [];
 
     public static CarrierShipmentResponse Success(
         string trackingNumber,
@@ -87,11 +107,12 @@ public record CarrierShipmentResponse
             CarrierReference = carrierReference
         };
 
-    public static CarrierShipmentResponse Failure(string failureReason) =>
+    public static CarrierShipmentResponse Failure(string failureReason, IReadOnlyList<CarrierError> errors) =>
         new()
         {
             Succeeded = false,
-            FailureReason = failureReason
+            FailureReason = failureReason,
+            Errors = errors
         };
 }
 
@@ -112,4 +133,6 @@ public record CreateShipmentResult
     public string? CarrierReference { get; init; }
 
     public string? FailureReason { get; init; }
+
+    public IReadOnlyList<ShipmentErrorDto> Errors { get; init; } = [];
 }

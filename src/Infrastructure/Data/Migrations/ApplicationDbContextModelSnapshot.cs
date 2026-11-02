@@ -418,6 +418,39 @@ namespace MultiCarrierApi.Infrastructure.Data.Migrations
                                 .HasForeignKey("ShipmentId");
                         });
 
+                    b.OwnsMany("MultiCarrierApi.Domain.ValueObjects.ShipmentError", "Errors", b1 =>
+                        {
+                            b1.Property<int>("ShipmentId")
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer");
+
+                            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<int>("Id"));
+
+                            b1.Property<string>("Code")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)");
+
+                            b1.Property<string>("Field")
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)");
+
+                            b1.Property<string>("Message")
+                                .IsRequired()
+                                .HasMaxLength(500)
+                                .HasColumnType("character varying(500)");
+
+                            b1.HasKey("ShipmentId", "Id");
+
+                            b1.ToTable("ShipmentErrors", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("ShipmentId");
+                        });
+
                     b.OwnsMany("MultiCarrierApi.Domain.ValueObjects.Package", "Packages", b1 =>
                         {
                             b1.Property<int>("ShipmentId")
@@ -496,6 +529,8 @@ namespace MultiCarrierApi.Infrastructure.Data.Migrations
                             b1.Navigation("Weight")
                                 .IsRequired();
                         });
+
+                    b.Navigation("Errors");
 
                     b.Navigation("Packages");
 

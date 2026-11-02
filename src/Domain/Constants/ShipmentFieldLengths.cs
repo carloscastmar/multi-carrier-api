@@ -15,4 +15,8 @@ public static class ShipmentFieldLengths
     public const int AddressCountryCode = 2;
 
     public const int PackageDescription = 200;
+
+    public const int ErrorCode = 100;
+    public const int ErrorMessage = 500;
+    public const int ErrorField = 100;
 }

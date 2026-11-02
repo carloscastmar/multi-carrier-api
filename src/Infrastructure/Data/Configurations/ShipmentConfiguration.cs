@@ -25,6 +25,14 @@ public class ShipmentConfiguration : IEntityTypeConfiguration<Shipment>
             package.OwnsOne(p => p.Weight);
             package.OwnsOne(p => p.Dimensions);
         });
+
+        builder.OwnsMany(s => s.Errors, error =>
+        {
+            error.ToTable("ShipmentErrors");
+            error.Property(e => e.Code).HasMaxLength(ShipmentFieldLengths.ErrorCode).IsRequired();
+            error.Property(e => e.Message).HasMaxLength(ShipmentFieldLengths.ErrorMessage).IsRequired();
+            error.Property(e => e.Field).HasMaxLength(ShipmentFieldLengths.ErrorField);
+        });
     }
 
     private static void ConfigureAddress(OwnedNavigationBuilder<Shipment, Address> address)

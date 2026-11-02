@@ -40,4 +40,40 @@ public class ShipmentPersistenceTests
         reloaded.Packages.Count.ShouldBe(1);
         reloaded.Packages[0].Description.ShouldBe("Books");
     }
+
+    [Test]
+    public async Task ShouldPersistAndReloadShipmentErrors()
+    {
+        await using var scope = IntegrationTestSetup.ScopeFactory.CreateAsyncScope();
+        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+        var shipment = Shipment.Create(
+            CarrierType.FedEx,
+            Address.Create("Sender", "123 Main", null, "Atlanta", "GA", "30301", "US"),
+            Address.Create("Recipient", "456 Oak", null, "Dallas", "TX", "00000", "US"),
+            [
+                Package.Create(
+                    Weight.Create(2.5m, WeightUnit.Lb),
+                    Dimensions.Create(10, 8, 6, DimensionUnit.In))
+            ],
+            "Ground");
+
+        context.Shipments.Add(shipment);
+        await context.SaveChangesAsync();
+
+        shipment.MarkFailed(
+            "Carrier rejected the shipment.",
+            [ShipmentError.Create("invalid_postal_code", "The postal code is not valid.", "ShipTo.PostalCode")]);
+        await context.SaveChangesAsync();
+
+        var reloaded = await context.Shipments
+            .AsNoTracking()
+            .FirstAsync(s => s.Id == shipment.Id);
+
+        reloaded.Status.ShouldBe(ShipmentStatus.Failed);
+        reloaded.Errors.Count.ShouldBe(1);
+        reloaded.Errors[0].Code.ShouldBe("invalid_postal_code");
+        reloaded.Errors[0].Message.ShouldBe("The postal code is not valid.");
+        reloaded.Errors[0].Field.ShouldBe("ShipTo.PostalCode");
+    }
 }

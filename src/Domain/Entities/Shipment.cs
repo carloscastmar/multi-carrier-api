@@ -28,6 +28,8 @@ public class Shipment : BaseAuditableEntity
 
     public IList<Package> Packages { get; private set; } = [];
 
+    public IList<ShipmentError> Errors { get; private set; } = [];
+
     private Shipment()
     {
     }
@@ -69,13 +71,22 @@ public class Shipment : BaseAuditableEntity
         LabelFormat = labelFormat;
         CarrierReference = carrierReference;
         FailureReason = null;
+        Errors.Clear();
 
         AddDomainEvent(new ShipmentCreatedEvent(this));
     }
 
-    public void MarkFailed(string failureReason)
+    public void MarkFailed(string failureReason, IEnumerable<ShipmentError> errors)
     {
         Status = ShipmentStatus.Failed;
         FailureReason = failureReason;
+        Errors.Clear();
+
+        foreach (var error in errors)
+        {
+            Errors.Add(error);
+        }
+
+        AddDomainEvent(new ShipmentFailedEvent(this));
     }
 }
