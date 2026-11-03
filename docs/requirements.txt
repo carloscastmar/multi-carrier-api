@@ -1,0 +1,5 @@
+# REQUIREMENTS
+
+- Users should be able to create a shipment on different carriers
+- Users should be able to request generated labels
+- When a request fails, users should be able to retry the same shipment request
