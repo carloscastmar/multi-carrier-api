@@ -1,13 +1,13 @@
-<Project Sdk="Aspire.AppHost.Sdk/13.4.6">
+<Project Sdk="Aspire.AppHost.Sdk/13.6.4">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <RootNamespace>MultiCarrierApi.TestAppHost</RootNamespace>
     <AssemblyName>MultiCarrierApi.TestAppHost</AssemblyName>
+    <AspireUseCliBundle>true</AspireUseCliBundle>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspire.Hosting.AppHost" />
     <PackageReference Include="Aspire.Hosting.Azure.PostgreSQL" />
   </ItemGroup>
 
