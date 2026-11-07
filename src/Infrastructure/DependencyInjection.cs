@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using OpenTelemetry.Trace;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -61,22 +62,33 @@ public static class DependencyInjection
 
         if (carriersOptions.Ups.UseMock)
         {
-            builder.Services.AddScoped<ICarrierShipmentAdapter, MockUpsAdapter>();
+            AddInstrumentedAdapter<MockUpsAdapter>(builder.Services);
         }
         else
         {
-            builder.Services.AddScoped<ICarrierShipmentAdapter, UpsShipmentAdapter>();
+            AddInstrumentedAdapter<UpsShipmentAdapter>(builder.Services);
         }
 
         if (carriersOptions.FedEx.UseMock)
         {
-            builder.Services.AddScoped<ICarrierShipmentAdapter, MockFedExAdapter>();
+            AddInstrumentedAdapter<MockFedExAdapter>(builder.Services);
         }
         else
         {
-            builder.Services.AddScoped<ICarrierShipmentAdapter, FedExShipmentAdapter>();
+            AddInstrumentedAdapter<FedExShipmentAdapter>(builder.Services);
         }
 
         builder.Services.AddScoped<ICarrierAdapterFactory, CarrierAdapterFactory>();
+
+        builder.Services.AddOpenTelemetry()
+            .WithTracing(tracing => tracing.AddSource(InstrumentedCarrierAdapter.ActivitySourceName));
+    }
+
+    private static void AddInstrumentedAdapter<TAdapter>(IServiceCollection services)
+        where TAdapter : class, ICarrierShipmentAdapter
+    {
+        services.AddScoped<TAdapter>();
+        services.AddScoped<ICarrierShipmentAdapter>(sp =>
+            ActivatorUtilities.CreateInstance<InstrumentedCarrierAdapter>(sp, sp.GetRequiredService<TAdapter>()));
     }
 }

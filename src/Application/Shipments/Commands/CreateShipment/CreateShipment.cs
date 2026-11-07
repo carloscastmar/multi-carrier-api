@@ -59,6 +59,8 @@ public class CreateShipmentCommandHandler : IRequestHandler<CreateShipmentComman
         _context.Shipments.Add(shipment);
         await _context.SaveChangesAsync(cancellationToken);
 
+        using var logScope = _logger.BeginScope(new Dictionary<string, object> { ["ShipmentId"] = shipment.Id });
+
         CarrierShipmentResponse carrierResponse;
 
         try

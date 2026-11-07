@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using MultiCarrierApi.Infrastructure.Data;
 using Scalar.AspNetCore;
 
@@ -14,6 +15,19 @@ builder.AddWebServices();
 var app = builder.Build();
 
 app.UseExceptionHandler();
+
+// Echo the trace id so callers can quote it when reporting a problem.
+app.Use(async (context, next) =>
+{
+    var traceId = Activity.Current?.TraceId.ToString() ?? context.TraceIdentifier;
+    context.Response.OnStarting(() =>
+    {
+        context.Response.Headers["X-Trace-Id"] = traceId;
+        return Task.CompletedTask;
+    });
+
+    await next();
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
