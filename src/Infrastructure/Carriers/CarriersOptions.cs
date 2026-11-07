@@ -15,6 +15,8 @@ public class CarrierOptions
 
     public string? ApiUrl { get; set; }
 
+    public string? AccountNumber { get; set; }
+
     public string? ClientId { get; set; }
 
     public string? ClientSecret { get; set; }

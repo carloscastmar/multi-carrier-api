@@ -66,6 +66,8 @@ public static class DependencyInjection
         }
         else
         {
+            builder.Services.AddHttpClient(UpsShipmentAdapter.HttpClientName);
+            builder.Services.AddSingleton<UpsTokenProvider>();
             AddInstrumentedAdapter<UpsShipmentAdapter>(builder.Services);
         }
 
