@@ -33,6 +33,7 @@ public class AddressDtoValidator : AbstractValidator<AddressDto>
             .NotEmpty()
             .Length(ShipmentFieldLengths.AddressCountryCode)
             .WithMessage("Country code must be a 2-letter ISO code.");
+        RuleFor(v => v.Phone).MaximumLength(ShipmentFieldLengths.AddressPhone);
     }
 }
 

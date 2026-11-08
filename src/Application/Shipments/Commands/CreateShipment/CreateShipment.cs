@@ -143,7 +143,8 @@ public class CreateShipmentCommandHandler : IRequestHandler<CreateShipmentComman
             dto.City,
             dto.State,
             dto.PostalCode,
-            dto.CountryCode);
+            dto.CountryCode,
+            dto.Phone);
 
     private static Package MapPackage(PackageDto dto) =>
         Package.Create(

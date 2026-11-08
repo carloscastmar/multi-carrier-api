@@ -77,6 +77,8 @@ public static class DependencyInjection
         }
         else
         {
+            builder.Services.AddHttpClient(FedExShipmentAdapter.HttpClientName);
+            builder.Services.AddSingleton<FedExTokenProvider>();
             AddInstrumentedAdapter<FedExShipmentAdapter>(builder.Services);
         }
 

@@ -16,6 +16,8 @@ public class Address : ValueObject
 
     public string CountryCode { get; private set; } = string.Empty;
 
+    public string? Phone { get; private set; }
+
     private Address()
     {
     }
@@ -27,7 +29,8 @@ public class Address : ValueObject
         string city,
         string state,
         string postalCode,
-        string countryCode)
+        string countryCode,
+        string? phone)
     {
         Name = name;
         Street1 = street1;
@@ -36,6 +39,7 @@ public class Address : ValueObject
         State = state;
         PostalCode = postalCode;
         CountryCode = countryCode;
+        Phone = phone;
     }
 
     public static Address Create(
@@ -45,7 +49,8 @@ public class Address : ValueObject
         string city,
         string state,
         string postalCode,
-        string countryCode)
+        string countryCode,
+        string? phone = null)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -84,7 +89,8 @@ public class Address : ValueObject
             city.Trim(),
             state.Trim(),
             postalCode.Trim(),
-            countryCode.Trim().ToUpperInvariant());
+            countryCode.Trim().ToUpperInvariant(),
+            string.IsNullOrWhiteSpace(phone) ? null : phone.Trim());
     }
 
     protected override IEnumerable<object> GetEqualityComponents()
@@ -96,5 +102,6 @@ public class Address : ValueObject
         yield return State;
         yield return PostalCode;
         yield return CountryCode;
+        yield return Phone ?? string.Empty;
     }
 }

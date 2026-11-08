@@ -17,7 +17,7 @@ namespace MultiCarrierApi.Infrastructure.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.8")
+                .HasAnnotation("ProductVersion", "10.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -344,6 +344,10 @@ namespace MultiCarrierApi.Infrastructure.Data.Migrations
                                 .HasMaxLength(200)
                                 .HasColumnType("character varying(200)");
 
+                            b1.Property<string>("Phone")
+                                .HasMaxLength(20)
+                                .HasColumnType("character varying(20)");
+
                             b1.Property<string>("PostalCode")
                                 .IsRequired()
                                 .HasMaxLength(20)
@@ -391,6 +395,10 @@ namespace MultiCarrierApi.Infrastructure.Data.Migrations
                                 .HasMaxLength(200)
                                 .HasColumnType("character varying(200)");
 
+                            b1.Property<string>("Phone")
+                                .HasMaxLength(20)
+                                .HasColumnType("character varying(20)");
+
                             b1.Property<string>("PostalCode")
                                 .IsRequired()
                                 .HasMaxLength(20)
@@ -413,39 +421,6 @@ namespace MultiCarrierApi.Infrastructure.Data.Migrations
                             b1.HasKey("ShipmentId");
 
                             b1.ToTable("Shipments");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ShipmentId");
-                        });
-
-                    b.OwnsMany("MultiCarrierApi.Domain.ValueObjects.ShipmentError", "Errors", b1 =>
-                        {
-                            b1.Property<int>("ShipmentId")
-                                .HasColumnType("integer");
-
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("integer");
-
-                            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<int>("Id"));
-
-                            b1.Property<string>("Code")
-                                .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("character varying(100)");
-
-                            b1.Property<string>("Field")
-                                .HasMaxLength(100)
-                                .HasColumnType("character varying(100)");
-
-                            b1.Property<string>("Message")
-                                .IsRequired()
-                                .HasMaxLength(500)
-                                .HasColumnType("character varying(500)");
-
-                            b1.HasKey("ShipmentId", "Id");
-
-                            b1.ToTable("ShipmentErrors", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("ShipmentId");
@@ -528,6 +503,39 @@ namespace MultiCarrierApi.Infrastructure.Data.Migrations
 
                             b1.Navigation("Weight")
                                 .IsRequired();
+                        });
+
+                    b.OwnsMany("MultiCarrierApi.Domain.ValueObjects.ShipmentError", "Errors", b1 =>
+                        {
+                            b1.Property<int>("ShipmentId")
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer");
+
+                            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<int>("Id"));
+
+                            b1.Property<string>("Code")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)");
+
+                            b1.Property<string>("Field")
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)");
+
+                            b1.Property<string>("Message")
+                                .IsRequired()
+                                .HasMaxLength(500)
+                                .HasColumnType("character varying(500)");
+
+                            b1.HasKey("ShipmentId", "Id");
+
+                            b1.ToTable("ShipmentErrors", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("ShipmentId");
                         });
 
                     b.Navigation("Errors");

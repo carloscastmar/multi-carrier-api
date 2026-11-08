@@ -5,7 +5,6 @@ using MultiCarrierApi.Application.Shipments.Models;
 using MultiCarrierApi.Domain.Enums;
 using MultiCarrierApi.Infrastructure.Carriers;
 using MultiCarrierApi.Infrastructure.Carriers.Ups;
-using Microsoft.Extensions.Options;
 
 namespace MultiCarrierApi.Application.UnitTests.Carriers;
 
@@ -33,14 +32,14 @@ public class UpsShipmentAdapterTests
         ]
     };
 
-    private FakeHandler _handler = null!;
+    private FakeHttpHandler _handler = null!;
     private UpsShipmentAdapter _adapter = null!;
 
     [SetUp]
     public void SetUp()
     {
-        _handler = new FakeHandler();
-        var options = new TestOptions(new CarriersOptions
+        _handler = new FakeHttpHandler();
+        var options = new TestCarriersOptions(new CarriersOptions
         {
             Ups = new CarrierOptions
             {
@@ -51,7 +50,7 @@ public class UpsShipmentAdapterTests
                 ClientSecret = "secret"
             }
         });
-        var factory = new FakeFactory(_handler);
+        var factory = new FakeHttpClientFactory(_handler);
         var tokens = new UpsTokenProvider(factory, options, TimeProvider.System);
         _adapter = new UpsShipmentAdapter(factory, options, tokens);
     }
@@ -167,40 +166,17 @@ public class UpsShipmentAdapterTests
         _handler.Requests.Count(r => r.Uri.EndsWith("/oauth/token")).ShouldBe(2);
     }
 
-    private record RecordedRequest(string Uri, string? Authorization, string Body);
-
-    private sealed class FakeHandler : HttpMessageHandler
+    [Test]
+    public async Task ShouldSendPhoneWhenProvided()
     {
-        private readonly Queue<(HttpStatusCode Status, string Body)> _responses = new();
+        _handler.Enqueue(HttpStatusCode.OK, TokenJson);
+        _handler.Enqueue(HttpStatusCode.OK, SuccessJson);
+        var request = Request with { ShipTo = Request.ShipTo with { Phone = "5551234567" } };
 
-        public List<RecordedRequest> Requests { get; } = [];
+        await _adapter.CreateShipmentAsync(request, CancellationToken.None);
 
-        public void Enqueue(HttpStatusCode status, string body) => _responses.Enqueue((status, body));
-
-        protected override async Task<HttpResponseMessage> SendAsync(
-            HttpRequestMessage request, CancellationToken cancellationToken)
-        {
-            var body = request.Content is null ? string.Empty : await request.Content.ReadAsStringAsync(cancellationToken);
-            Requests.Add(new RecordedRequest(request.RequestUri!.ToString(), request.Headers.Authorization?.ToString(), body));
-            var (status, responseBody) = _responses.Dequeue();
-            return new HttpResponseMessage(status)
-            {
-                Content = new StringContent(responseBody, Encoding.UTF8, "application/json")
-            };
-        }
-    }
-
-    private sealed class FakeFactory(HttpMessageHandler handler) : IHttpClientFactory
-    {
-        public HttpClient CreateClient(string name) => new(handler, disposeHandler: false);
-    }
-
-    private sealed class TestOptions(CarriersOptions value) : IOptionsMonitor<CarriersOptions>
-    {
-        public CarriersOptions CurrentValue => value;
-
-        public CarriersOptions Get(string? name) => value;
-
-        public IDisposable? OnChange(Action<CarriersOptions, string?> listener) => null;
+        var shipment = JsonNode.Parse(_handler.Requests[1].Body)!["ShipmentRequest"]!["Shipment"]!;
+        shipment["ShipTo"]!["Phone"]!["Number"]!.GetValue<string>().ShouldBe("5551234567");
+        shipment["ShipFrom"]!["Phone"].ShouldBeNull();
     }
 }

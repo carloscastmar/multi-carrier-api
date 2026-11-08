@@ -163,7 +163,7 @@ public class UpsShipmentAdapter : ICarrierShipmentAdapter
             lines.Add(address.Street2);
         }
 
-        return new JsonObject
+        var party = new JsonObject
         {
             ["Name"] = address.Name,
             ["Address"] = new JsonObject
@@ -175,6 +175,13 @@ public class UpsShipmentAdapter : ICarrierShipmentAdapter
                 ["CountryCode"] = address.CountryCode
             }
         };
+
+        if (!string.IsNullOrWhiteSpace(address.Phone))
+        {
+            party["Phone"] = new JsonObject { ["Number"] = address.Phone };
+        }
+
+        return party;
     }
 
     private static JsonObject BuildPackage(PackageDto package) => new()

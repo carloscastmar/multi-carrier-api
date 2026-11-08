@@ -44,5 +44,6 @@ public class ShipmentConfiguration : IEntityTypeConfiguration<Shipment>
         address.Property(a => a.State).HasMaxLength(ShipmentFieldLengths.AddressState).IsRequired();
         address.Property(a => a.PostalCode).HasMaxLength(ShipmentFieldLengths.AddressPostalCode).IsRequired();
         address.Property(a => a.CountryCode).HasMaxLength(ShipmentFieldLengths.AddressCountryCode).IsRequired();
+        address.Property(a => a.Phone).HasMaxLength(ShipmentFieldLengths.AddressPhone);
     }
 }

@@ -28,6 +28,15 @@ public class AddressTests
         Should.Throw<ArgumentException>(() =>
             Address.Create("Acme", "123 Main", null, "Atlanta", "GA", "30301", "USA"));
     }
+
+    [Test]
+    public void ShouldTrimPhoneAndTreatBlankAsNull()
+    {
+        Address.Create("Acme", "123 Main", null, "Atlanta", "GA", "30301", "US", " 5551234567 ")
+            .Phone.ShouldBe("5551234567");
+        Address.Create("Acme", "123 Main", null, "Atlanta", "GA", "30301", "US", "  ")
+            .Phone.ShouldBeNull();
+    }
 }
 
 public class ShipmentErrorTests

@@ -2,7 +2,7 @@
 
 A .NET 10 Web API that creates shipments through a single endpoint across multiple carriers (UPS and FedEx) and stores each shipment with its tracking number and label. Callers send one carrier-neutral request; carrier adapters translate it to each carrier's own API.
 
-> **Status:** UPS and FedEx are served by mock adapters for now. The real carrier integrations are not implemented yet, so keep `Carriers:<Carrier>:UseMock` set to `true`.
+> **Status:** Real UPS and FedEx adapters exist, but they have only been tested against fake HTTP responses, not yet against the carriers' test environments. Each carrier has a mock adapter too. `Carriers:<Carrier>:UseMock` picks which one is registered; check it in `src/Web/appsettings.json` before you run.
 
 ## Tech Stack
 
@@ -36,6 +36,14 @@ Web / AppHost  ──>  Infrastructure  ──>  Application  ──>  Domain
 
 Every carrier implements `ICarrierShipmentAdapter`, and `ICarrierAdapterFactory` picks the adapter from the request's `carrier` value. For each carrier, the `Carriers:<Carrier>:UseMock` setting decides whether the mock or the real adapter is registered.
 
+The real adapters (`Infrastructure/Carriers/Ups/`, `Infrastructure/Carriers/FedEx/`) work the same way:
+
+- They get an OAuth client-credentials token and cache it until it is about to expire.
+- They request ZPL labels and return them as `LabelFormat.Zpl`.
+- They map `serviceLevel` to the carrier's service code. Names such as `Ground`, `Next Day Air` or `Priority Overnight` work, and so do raw carrier codes. If `serviceLevel` is empty, UPS uses Ground (`03`) and FedEx uses `FEDEX_GROUND`. An unknown value is a rejected shipment (422).
+- A carrier rejection (HTTP 400 or 422) becomes a failed shipment instead of an exception.
+- Only the first package's label and tracking number are returned for multi-package shipments.
+
 ## Getting Started
 
 ### Prerequisites
@@ -62,12 +70,22 @@ Carrier settings live in `src/Web/appsettings.json`:
 
 ```json
 "Carriers": {
-  "Ups":   { "UseMock": true, "ApiUrl": "", "ClientId": "", "ClientSecret": "" },
-  "FedEx": { "UseMock": true, "ApiUrl": "", "ClientId": "", "ClientSecret": "" }
+  "Ups":   { "UseMock": false, "ApiUrl": "https://wwwcie.ups.com",            "AccountNumber": "", "ClientId": "", "ClientSecret": "" },
+  "FedEx": { "UseMock": true,  "ApiUrl": "https://apis-sandbox.fedex.com", "AccountNumber": "", "ClientId": "", "ClientSecret": "" }
 }
 ```
 
-Do not commit carrier credentials. Provide them through user secrets locally, or through Azure Key Vault by setting `AZURE_KEY_VAULT_ENDPOINT`.
+To use a real carrier, set `UseMock` to `false` and fill in `AccountNumber` (the account that pays for the shipment), `ClientId` and `ClientSecret`. For local development, keep these in user secrets:
+
+```bash
+dotnet user-secrets --project src/Web set "Carriers:Ups:AccountNumber" "<value>"
+dotnet user-secrets --project src/Web set "Carriers:Ups:ClientId" "<value>"
+dotnet user-secrets --project src/Web set "Carriers:Ups:ClientSecret" "<value>"
+```
+
+The URLs above are the carriers' test environments. For production, use `https://onlinetools.ups.com` for UPS and `https://apis.fedex.com` for FedEx.
+
+Do not commit carrier credentials. Provide them through user secrets locally, or through Azure Key Vault by setting `AZURE_KEY_VAULT_ENDPOINT`. For now the account and credentials are global per carrier; per-user carrier accounts are planned in [ADR 0001](docs/decisions/0001-carrier-account-credentials.md).
 
 ## API
 
@@ -96,7 +114,8 @@ Content-Type: application/json
     "city": "Chicago",
     "state": "IL",
     "postalCode": "60601",
-    "countryCode": "US"
+    "countryCode": "US",
+    "phone": "3125550100"
   },
   "shipTo": {
     "name": "Jane Doe",
@@ -104,7 +123,8 @@ Content-Type: application/json
     "city": "Atlanta",
     "state": "GA",
     "postalCode": "30301",
-    "countryCode": "US"
+    "countryCode": "US",
+    "phone": "4045550100"
   },
   "packages": [
     {
@@ -117,7 +137,7 @@ Content-Type: application/json
 }
 ```
 
-Enum values are sent as numbers:
+`phone` is optional, but the carriers may reject a shipment without one. Enum values are sent as numbers:
 
 | Field | Values |
 |-------|--------|

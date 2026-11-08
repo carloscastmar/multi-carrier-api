@@ -17,6 +17,8 @@ public record AddressDto
     public string PostalCode { get; init; } = string.Empty;
 
     public string CountryCode { get; init; } = string.Empty;
+
+    public string? Phone { get; init; }
 }
 
 public record WeightDto
