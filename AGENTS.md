@@ -67,12 +67,7 @@ The AppHost defines service connections. Check `src/AppHost/appsettings.Developm
 
 ### Carrier Adapter Configuration
 
-Mock adapters are configurable via `CarriersOptions`:
-
-```csharp
-carriersOptions.Ups.UseMock = true  // or false to use UpsShipmentAdapter
-carriersOptions.FedEx.UseMock = true  // or false to use FedExShipmentAdapter
-```
+Each carrier has a real adapter and a mock. `Carriers:<Carrier>:UseMock` in `src/Web/appsettings.json` (bound to `CarriersOptions`) picks which one is registered. Both default to `true`. The real adapters also need `AccountNumber`, `ClientId` and `ClientSecret`, which come from user secrets.
 
 ## Code Scaffolding
 

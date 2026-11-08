@@ -1,8 +1,10 @@
 ﻿# Multi-Carrier Shipping API
 
+[![CI](https://github.com/carloscastmar/multi-carrier-api/actions/workflows/ci.yml/badge.svg)](https://github.com/carloscastmar/multi-carrier-api/actions/workflows/ci.yml)
+
 A .NET 10 Web API that creates shipments through a single endpoint across multiple carriers (UPS and FedEx) and stores each shipment with its tracking number and label. Callers send one carrier-neutral request; carrier adapters translate it to each carrier's own API.
 
-> **Status:** Real UPS and FedEx adapters exist, but they have only been tested against fake HTTP responses, not yet against the carriers' test environments. Each carrier has a mock adapter too. `Carriers:<Carrier>:UseMock` picks which one is registered; check it in `src/Web/appsettings.json` before you run.
+> **Status:** Real UPS and FedEx adapters exist, but they have only been tested against fake HTTP responses, not yet against the carriers' test environments. Both carriers run on mock adapters by default (`Carriers:<Carrier>:UseMock` is `true`), so the project works without any carrier account.
 
 ## Tech Stack
 
@@ -59,7 +61,7 @@ dotnet run --project src/AppHost
 
 The Aspire dashboard opens with the service URLs and logs. The API redirects `/` to the Scalar API reference at `/scalar`.
 
-In Development, the database is migrated and seeded on startup with an administrator account:
+In Development only, the database is migrated and seeded on startup with an administrator account (never created in other environments):
 
 - Email: `administrator@localhost`
 - Password: `Administrator1!`
@@ -70,7 +72,7 @@ Carrier settings live in `src/Web/appsettings.json`:
 
 ```json
 "Carriers": {
-  "Ups":   { "UseMock": false, "ApiUrl": "https://wwwcie.ups.com",            "AccountNumber": "", "ClientId": "", "ClientSecret": "" },
+  "Ups":   { "UseMock": true,  "ApiUrl": "https://wwwcie.ups.com",            "AccountNumber": "", "ClientId": "", "ClientSecret": "" },
   "FedEx": { "UseMock": true,  "ApiUrl": "https://apis-sandbox.fedex.com", "AccountNumber": "", "ClientId": "", "ClientSecret": "" }
 }
 ```
@@ -187,6 +189,17 @@ dotnet test
 | `tests/Application.FunctionalTests` | End-to-end use cases against PostgreSQL | Yes |
 
 The integration and functional tests start PostgreSQL through `tests/TestAppHost`.
+
+### Design decisions
+
+Decisions are recorded in [`docs/decisions`](docs/decisions):
+
+- [0001 Carrier account credentials](docs/decisions/0001-carrier-account-credentials.md): accepted. Users connect their own carrier account once (bring your own account). Not built yet.
+- [0002 Idempotency key](docs/decisions/0002-use-of-idempotency-key.md): proposed and still open. Retrying a failed shipment request safely is not implemented yet.
+
+### Licensing note
+
+MediatR and AutoMapper (v14 and v16) are commercial for production use. They run in development and testing without a license key, and log a warning at startup. This project is not intended for production as it stands.
 
 ### CI
 
